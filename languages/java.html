@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Programming - Smart Study Portal</title>
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg">
+    <link rel="stylesheet" href="../css/java.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* TODO: Maybe add more colors later */
+        :root {
+            --primary-color: #5382a1; /* Java Blue */
+            --secondary-color: #f89820; /* Java Orange */
+            --text-color: #232323;
+            --background-color: #fff;
+            --card-background: #fff;
+            --border-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #2d4a5a;
+            --secondary-color: #f89820;
+            --text-color: #f3f3f3;
+            --background-color: #181c20;
+            --card-background: #232a31;
+            --border-color: #555b60;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding-top: 80px;
+            width: 100%;
+        }
+
+        /* FIXME: Navbar might need better mobile support */
+        .navbar {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .navbar h1 {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-input {
+            padding: 0.5rem;
+            border: 1px solid var(--secondary-color);
+            border-radius: 4px;
+            width: 250px;
+            background: var(--card-background);
+            color: var(--text-color);
+        }
+
+        /* TODO: Make cards more responsive */
+        .course-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+            margin: 1rem auto;
+        }
+
+        .course-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .course-card:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .course-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .course-details {
+            font-size: 0.9rem;
+        }
+
+        .course-details span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-details i {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* FIXME: Platform grid needs better spacing on mobile */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem;
+            padding: 1rem;
+        }
+
+        .platform-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .platform-card:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .platform-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .platform-card p {
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .platform-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .platform-link:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        /* TODO: Make roadmap sections more compact */
+        .roadmap-section {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem;
+        }
+
+        .roadmap-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .roadmap-content {
+            display: none;
+        }
+
+        .roadmap-section:not(.collapsed) .roadmap-content {
+            display: block;
+        }
+
+        /* FIXME: Week sections need better organization */
+        .week-section {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--card-background);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .week-section h5 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .topic-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .topic-card h6 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .topic-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .topic-card li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-left: 2px solid var(--secondary-color);
+        }
+
+        .topic-card a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .topic-card a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* TODO: Add better mobile styles */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-controls {
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .course-cards {
+                padding: 0.5rem;
+            }
+
+            .platform-grid {
+                margin: 0.5rem;
+            }
+
+            .roadmap-section {
+                margin: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <div class="logo">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" width="40" height="40">
+            </div>
+            <h1>Java Programming</h1>
+        </div>
+        <div class="nav-controls">
+            <input type="text" class="search-input" placeholder="Search topics...">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Toggle Theme
+            </button>
+        </div>
+    </nav>
+
+    <!-- Course Cards Section -->
+    <div class="course-cards">
+        <div class="course-card">
+            <h3>Java Fundamentals – Great Learning</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 6 hours</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-star"></i> Rating: 4.7/5</span>
+                <span><i class="fas fa-list"></i> Features: Core Java, OOP, Practice exercises</span>
+                <span><i class="fas fa-globe"></i> Platform: Great Learning</span>
+                <a href="https://www.mygreatlearning.com/academy/learn-for-free/courses/java-fundamentals" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+        <div class="course-card">
+            <h3>Java for Beginners – Infosys Springboard</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 8 weeks</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-star"></i> Rating: 4.6/5</span>
+                <span><i class="fas fa-list"></i> Features: Java basics, Arrays, Functions, OOP</span>
+                <span><i class="fas fa-globe"></i> Platform: Infosys Springboard</span>
+                <a href="https://infyspringboard.onwingspan.com/web/en/app/toc/lex_auth_013104889312124928168_shared/overview" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+        <div class="course-card">
+            <h3>Object-Oriented Programming in Java – Coursera</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 4 weeks</span>
+                <span><i class="fas fa-tag"></i> Price: Free (Certificate: ₹3,999)</span>
+                <span><i class="fas fa-star"></i> Rating: 4.8/5</span>
+                <span><i class="fas fa-list"></i> Features: OOP, Classes, Inheritance, Projects</span>
+                <span><i class="fas fa-globe"></i> Platform: Coursera</span>
+                <a href="https://www.coursera.org/learn/object-oriented-java" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+        <div class="course-card">
+            <h3>Java Programming Masterclass – Udemy</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 80+ hours</span>
+                <span><i class="fas fa-tag"></i> Price: ₹3,499</span>
+                <span><i class="fas fa-star"></i> Rating: 4.7/5</span>
+                <span><i class="fas fa-list"></i> Features: Complete Java, OOP, DSA, Projects</span>
+                <span><i class="fas fa-globe"></i> Platform: Udemy</span>
+                <a href="https://www.udemy.com/course/java-the-complete-java-developer-course/" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Platforms Section -->
+    <div class="roadmap-section" style="margin-top: 2.5rem;">
+        <h3>Practice Platforms</h3>
+        <div class="roadmap-content" style="display: block; max-height: none;">
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <h3><i class="fas fa-code"></i> CodingBat</h3>
+                    <p>Practice Java basics and OOP with interactive problems.</p>
+                    <a href="https://codingbat.com/java" target="_blank" class="platform-link">Start Practicing</a>
+                </div>
+                <div class="platform-card">
+                    <h3><i class="fas fa-laptop-code"></i> HackerRank</h3>
+                    <p>Learn Java and DSA through challenges and earn certificates.</p>
+                    <a href="https://www.hackerrank.com/domains/java" target="_blank" class="platform-link">Start Practicing</a>
+                </div>
+                <div class="platform-card">
+                    <h3><i class="fas fa-trophy"></i> GeeksforGeeks</h3>
+                    <p>Practice Java and DSA problems, participate in contests.</p>
+                    <a href="https://practice.geeksforgeeks.org/explore?page=1&category[]=Java" target="_blank" class="platform-link">Start Practicing</a>
+                </div>
+                <div class="platform-card">
+                    <h3><i class="fas fa-brain"></i> LeetCode</h3>
+                    <p>Practice Java DSA and prepare for interviews.</p>
+                    <a href="https://leetcode.com/tag/java/" target="_blank" class="platform-link">Start Practicing</a>
+                </div>
+                <div class="platform-card" style="margin-top: 1.5rem;">
+                    <h3>JetBrains Academy</h3>
+                    <p>Interactive Java learning with real projects and guided tracks.</p>
+                    <a href="https://academy.jetbrains.com/" target="_blank" class="platform-link" style="margin-top: 0.5rem;">View Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JetBrains Academy Featured Courses Section -->
+    <div class="roadmap-section" style="margin-top: 2.5rem;">
+        <h3 style="cursor: default;">JetBrains Academy Featured Courses</h3>
+        <div class="roadmap-content" style="display: flex; justify-content: center; align-items: stretch; gap: 2.5rem; flex-wrap: wrap; max-height: none;">
+            <!-- Java Courses -->
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Java Developer (Hyperskill)</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Learn essential Java development skills, from basic syntax to advanced features. Build a solid foundation to master any framework you need. Learn to use AI to code faster.</span>
+                    <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
+                    <a href="https://hyperskill.org/tracks/8" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Java Backend Developer (Spring Boot)</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Master Java with Spring Boot to build strong web apps and unlock high-demand job opportunities.</span>
+                    <span><i class="fas fa-signal"></i> Level: Intermediate to Advanced</span>
+                    <a href="https://hyperskill.org/tracks/17" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Introduction to IDE Code Refactoring in Java</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Learn to recognize and perform code refactorings using IDE features. Improve code quality and maintainability.</span>
+                    <span><i class="fas fa-signal"></i> Level: Beginner to Intermediate</span>
+                    <a href="https://academy.jetbrains.com/courses/introduction-to-ide-code-refactoring-in-java" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12-Week Java Roadmap -->
+    <div class="roadmap-section static-heading" style="margin-bottom: 2.5rem;">
+        <h3 style="cursor: default;">Java Learning Roadmaps</h3>
+        <div class="roadmap-content" style="text-align: center; display: block; max-height: none;">
+            <p style="font-size: 1.15rem; color: #555;">Explore three comprehensive 12-week roadmaps: <b>Core Java</b>, <b>Java DSA</b>, and <b>Java UI/UX</b>. Expand each section and week to see resources and practice questions.</p>
+        </div>
+    </div>
+    <!-- Core Java Section -->
+    <div class="roadmap-section">
+        <h3>Core Java (Weeks 1–12)</h3>
+        <div class="roadmap-content">
+            <div class="week-section collapsed">
+                <h5>Week 1: Java Introduction & Setup</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_intro.asp" target="_blank"><i class="fas fa-info-circle"></i> What is Java? History and features</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_getstarted.asp" target="_blank"><i class="fas fa-download"></i> Install JDK & IntelliJ/Eclipse</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_syntax.asp" target="_blank"><i class="fas fa-code"></i> First Java Program: Hello World</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_comments.asp" target="_blank"><i class="fas fa-comment"></i> Keywords, Identifiers, Comments</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Print 'Hello World' in Java</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Print the sum of two numbers</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Divide two numbers and print the result</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Print the result of an arithmetic expression</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Compute the specified expressions and print the output</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 2: Variables, Data Types, and Operators</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_variables.asp" target="_blank"><i class="fas fa-code"></i> Primitive & Non-primitive types</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_type_casting.asp" target="_blank"><i class="fas fa-exchange-alt"></i> Type casting, literals</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_operators.asp" target="_blank"><i class="fas fa-calculator"></i> Arithmetic, relational, logical, bitwise operators</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_operators.asp" target="_blank"><i class="fas fa-sort-numeric-down"></i> Expressions & precedence</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-6.php" target="_blank"><i class="fas fa-star"></i> Easy: Print the product of two numbers</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-7.php" target="_blank"><i class="fas fa-star"></i> Easy: Print the sum, difference, product, and average of two numbers</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-8.php" target="_blank"><i class="fas fa-star"></i> Medium: Print the remainder of two numbers</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-9.php" target="_blank"><i class="fas fa-star"></i> Medium: Swap two variables</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/basic/java-basic-exercise-10.php" target="_blank"><i class="fas fa-star"></i> Hard: Multiply two binary numbers</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 3: Control Statements</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_conditions.asp" target="_blank"><i class="fas fa-code-branch"></i> if, if-else, nested if</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_switch.asp" target="_blank"><i class="fas fa-random"></i> switch-case</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_while_loop.asp" target="_blank"><i class="fas fa-sync"></i> Loops: for, while, do-while</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_break.asp" target="_blank"><i class="fas fa-stop"></i> Break, continue, labels</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/conditional/java-conditional-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Check if a number is positive or negative</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/conditional/java-conditional-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Check if a number is even or odd</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/conditional/java-conditional-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Find the largest among three numbers</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/conditional/java-conditional-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Print the multiplication table of a number</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/conditional/java-conditional-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Print all prime numbers between 1 and 100</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 4: Arrays & Strings</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_arrays.asp" target="_blank"><i class="fas fa-table"></i> 1D, 2D arrays, array methods</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_strings.asp" target="_blank"><i class="fas fa-font"></i> String handling, String methods</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_stringbuilder.asp" target="_blank"><i class="fas fa-text-width"></i> StringBuilder and StringBuffer</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/array/java-array-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Sum values of an array</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/array/java-array-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Find the index of an array element</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/array/java-array-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Remove a specific element from an array</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/array/java-array-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Copy an array by iterating the array</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/array/java-array-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Find the maximum and minimum value of an array</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 5: Functions and Methods</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_methods.asp" target="_blank"><i class="fas fa-function"></i> Defining and calling methods</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_methods_overloading.asp" target="_blank"><i class="fas fa-code-branch"></i> Method overloading</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_methods_param.asp" target="_blank"><i class="fas fa-exchange-alt"></i> Call by value/reference</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_recursion.asp" target="_blank"><i class="fas fa-sync"></i> Recursion basics</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/method/java-method-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Print the sum of two numbers using method</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/method/java-method-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Find the average of three numbers using method</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/method/java-method-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Check if a number is even or odd using method</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/method/java-method-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Find the factorial of a number using recursion</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/method/java-method-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Find the GCD of two numbers using recursion</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 6: Object-Oriented Programming - Part 1</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_oop.asp" target="_blank"><i class="fas fa-cube"></i> Classes and objects</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_constructors.asp" target="_blank"><i class="fas fa-hammer"></i> Constructors and types</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_this.asp" target="_blank"><i class="fas fa-key"></i> this keyword</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_modifiers.asp" target="_blank"><i class="fas fa-lock"></i> Access modifiers</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/class/java-class-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Create a class and object in Java</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/class/java-class-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Create a class with a method and call it</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/class/java-class-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Create a class with a constructor and initialize values</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/class/java-class-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Create a class with private variables and public methods</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/class/java-class-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Create a class with static and instance variables</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 7: Object-Oriented Programming - Part 2</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_inheritance.asp" target="_blank"><i class="fas fa-sitemap"></i> Inheritance and super keyword</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_polymorphism.asp" target="_blank"><i class="fas fa-random"></i> Method overriding</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_polymorphism.asp" target="_blank"><i class="fas fa-code-branch"></i> Polymorphism (compile-time & runtime)</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/inheritance/java-inheritance-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Create a subclass and call the superclass method</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/inheritance/java-inheritance-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Demonstrate method overriding</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/inheritance/java-inheritance-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Use super keyword to access superclass variables</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/inheritance/java-inheritance-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Demonstrate runtime polymorphism</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/inheritance/java-inheritance-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Create a multilevel inheritance example</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 8: Abstraction & Encapsulation</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_abstract.asp" target="_blank"><i class="fas fa-shapes"></i> Abstract classes and interfaces</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_encapsulation.asp" target="_blank"><i class="fas fa-box"></i> Encapsulation and getters/setters</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_modifiers.asp" target="_blank"><i class="fas fa-key"></i> Static and final keywords</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/abstract/java-abstract-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Create an abstract class and subclass</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/abstract/java-abstract-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Implement an interface in a class</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/abstract/java-abstract-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Use abstract methods in subclasses</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/abstract/java-abstract-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Demonstrate encapsulation with private variables</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/abstract/java-abstract-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Use static and final keywords in a class</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 9: Exception Handling</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_try_catch.asp" target="_blank"><i class="fas fa-exclamation-triangle"></i> try, catch, finally</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_try_catch.asp" target="_blank"><i class="fas fa-code-branch"></i> Multiple catch blocks</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_throw.asp" target="_blank"><i class="fas fa-bomb"></i> throw and throws</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_exceptions.asp" target="_blank"><i class="fas fa-exclamation-circle"></i> Custom exceptions</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/exception/java-exception-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Handle ArrayIndexOutOfBoundsException</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/exception/java-exception-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Handle NumberFormatException</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/exception/java-exception-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Use try-catch-finally block</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/exception/java-exception-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Create a custom exception</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/exception/java-exception-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Throw and catch multiple exceptions</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 10: Java Collections Basics</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_arraylist.asp" target="_blank"><i class="fas fa-list"></i> Arrays vs Collections</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_arraylist.asp" target="_blank"><i class="fas fa-table"></i> ArrayList, LinkedList, HashSet, HashMap</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_iterator.asp" target="_blank"><i class="fas fa-sync"></i> Iterators and loops</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/collection/java-collection-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Create an ArrayList and add elements</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/collection/java-collection-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Iterate through all elements in a LinkedList</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/collection/java-collection-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Remove an element from a HashSet</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/collection/java-collection-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Get the number of elements in a HashMap</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/collection/java-collection-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Sort elements in an ArrayList</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 11: File Handling</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Topics Covered</h6>
+                        <ul>
+                            <li><a href="https://www.w3schools.com/java/java_files.asp" target="_blank"><i class="fas fa-file"></i> FileReader, FileWriter</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_files.asp" target="_blank"><i class="fas fa-file-alt"></i> BufferedReader, BufferedWriter</a></li>
+                            <li><a href="https://www.w3schools.com/java/java_files.asp" target="_blank"><i class="fas fa-file-import"></i> Read/write from/to files</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/file/java-file-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Create a new file and write to it</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/file/java-file-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Read a file and display its contents</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/file/java-file-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Append text to an existing file</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/file/java-file-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Count the number of lines in a file</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/file/java-file-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Find the longest word in a file</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed">
+                <h5>Week 12: Mini Project Week</h5>
+                <div class="roadmap-content">
+                    <div class="topic-card">
+                        <h6><i class="fas fa-list-check"></i> Project Options</h6>
+                        <ul>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-1.php" target="_blank"><i class="fas fa-user-graduate"></i> Student Record Manager</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-2.php" target="_blank"><i class="fas fa-book"></i> Library Book System</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-3.php" target="_blank"><i class="fas fa-address-book"></i> Contact Manager App</a></li>
+                        </ul>
+                    </div>
+                    <div class="practice-card">
+                        <h6><i class="fas fa-code"></i> Practice Questions</h6>
+                        <ol>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-1.php" target="_blank"><i class="fas fa-star"></i> Easy: Student Record Manager</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-2.php" target="_blank"><i class="fas fa-star"></i> Easy: Library Book System</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-3.php" target="_blank"><i class="fas fa-star"></i> Medium: Contact Manager App</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-4.php" target="_blank"><i class="fas fa-star"></i> Medium: Inventory Management System</a></li>
+                            <li><a href="https://www.w3resource.com/java-exercises/project/java-project-exercise-5.php" target="_blank"><i class="fas fa-star"></i> Hard: Banking System</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="week-section collapsed"><h5>Get Certified</h5><div class="roadmap-content">
+                <ul>
+                    <li>Complete the <a href="https://www.mygreatlearning.com/academy/learn-for-free/courses/java-fundamentals" target="_blank">Java Fundamentals course on Great Learning</a></li>
+                    <li>Take the quiz and download the free certificate</li>
+                </ul>
+            </div></div>
+        </div>
+    </div>
+    <!-- Java DSA Section -->
+    <div class="roadmap-section">
+        <h3>Java DSA Courses</h3>
+        <div class="roadmap-content" style="display: flex; justify-content: center; align-items: stretch; gap: 2.5rem; flex-wrap: wrap;">
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Algorithms and Data Structures Masterclass</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-globe"></i> Platform: Udemy</span>
+                    <span><i class="far fa-clock"></i> Duration: 40+ hours</span>
+                    <span><i class="fas fa-star"></i> Rating: 4.7/5</span>
+                    <span><i class="fas fa-tag"></i> Price: ₹3,499 (Use code: NVDINCTA35TRT)</span>
+                    <span><i class="fas fa-list"></i> Features: Covers all major algorithms and data structures, real-world projects, visual explanations, lifetime access, certificate of completion.</span>
+                    <a href="https://www.udemy.com/course/algorithms-and-data-structures/?couponCode=NVDINCTA35TRT" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Data Structures and Algorithms in Java</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-globe"></i> Platform: Udemy</span>
+                    <span><i class="far fa-clock"></i> Duration: 35+ hours</span>
+                    <span><i class="fas fa-star"></i> Rating: 4.6/5</span>
+                    <span><i class="fas fa-tag"></i> Price: ₹3,499 (Use code: NVDINCTA35TRT)</span>
+                    <span><i class="fas fa-list"></i> Features: Java-specific DSA, hands-on coding, interview prep, quizzes, lifetime access, certificate of completion.</span>
+                    <a href="https://www.udemy.com/course/data-structures-and-algorithms-in-java/?couponCode=NVDINCTA35TRT" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Data Structures and Algorithms Java (JetBrains Plugin)</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-globe"></i> Platform: JetBrains Plugin Marketplace</span>
+                    <span><i class="fas fa-list"></i> Features: Practice and visualize Java DSA problems directly in your JetBrains IDE. Interactive, hands-on, and free to use.</span>
+                    <a href="https://plugins.jetbrains.com/plugin/25805-data-structures-and-algorithms-java-" target="_blank" class="course-link">View Plugin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        // Collapsible Main Sections (except static heading)
+        document.querySelectorAll('.roadmap-section > h3:not(.static-heading h3)').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('collapsed');
+            });
+        });
+        // Collapsible Weeks
+        document.querySelectorAll('.week-section > h5').forEach(header => {
+            header.addEventListener('click', () => {
+                const week = header.parentElement;
+                week.classList.toggle('collapsed');
+            });
+        });
+        // Collapse all main sections and week-sections by default
+        document.querySelectorAll('.roadmap-section').forEach(section => {
+            section.classList.add('collapsed');
+            section.querySelectorAll('.week-section').forEach(week => {
+                week.classList.add('collapsed');
+            });
+        });
+        // Search Functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.roadmap-section').forEach(section => {
+                const content = section.textContent.toLowerCase();
+                section.style.display = content.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html> 
