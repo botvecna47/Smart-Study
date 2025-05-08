@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming - Smart Study Portal</title>
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
+    <link rel="stylesheet" href="../css/python.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light Theme */
+            --primary-color: #306998;  /* Python Blue */
+            --secondary-color: #FFD43B; /* Python Yellow */
+            --accent-color: #4B8BBE;   /* Light Python Blue */
+            --text-color: #2c3e50;
+            --background-color: #ffffff;
+            --card-background: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #4B8BBE;
+            --secondary-color: #FFD43B;
+            --accent-color: #306998;
+            --text-color: #ffffff;
+            --background-color: #1a1a1a;
+            --card-background: #2d2d2d;
+            --border-color: #404040;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            transition: background-color 0.3s, color 0.3s;
+            padding-top: 80px; /* Add padding for fixed navbar */
+            margin: 0;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            background: var(--primary-color);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            background: transparent;
+            box-shadow: none;
+            margin-right: 0.5rem;
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            display: block;
+        }
+
+        .nav-left h1 {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #e6c035;
+            transform: translateX(-3px);
+        }
+
+        .navbar h1 {
+            color: var(--secondary-color);
+            margin: 0;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #e6c035;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--secondary-color);
+            border-radius: 5px;
+            width: 300px;
+            max-width: 100%;
+            background: var(--card-background);
+            color: var(--text-color);
+        }
+
+        .course-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 auto 2rem auto;
+            justify-items: center;
+            text-align: center;
+        }
+
+        .course-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topic-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: all 0.3s ease;
+            width: calc(100% - 4rem);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .roadmap-section {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            width: calc(100% - 4rem);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem auto;
+            width: calc(100% - 4rem);
+            box-sizing: border-box;
+            justify-items: center;
+            text-align: center;
+        }
+
+        .platform-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        .week-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-background);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .roadmap-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .roadmap-section h3::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            transition: transform 0.3s ease;
+        }
+
+        .roadmap-section.collapsed h3::after {
+            transform: rotate(-90deg);
+        }
+
+        .roadmap-content {
+            transition: max-height 0.3s ease;
+            overflow: hidden;
+        }
+
+        .roadmap-section.collapsed .roadmap-content {
+            max-height: 0;
+        }
+
+        .resource-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .resource-list li {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--card-background);
+            border-radius: 5px;
+            border-left: 3px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .resource-list li:hover {
+            transform: translateX(5px);
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .resource-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-list li:hover a {
+            color: var(--secondary-color);
+        }
+
+        .practice-questions {
+            background: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .practice-questions h5 {
+            color: var(--primary-color);
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .practice-questions ol {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .practice-questions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .practice-questions a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .practice-questions a:hover {
+            text-decoration: underline;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .course-details {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .course-details span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-details i {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .platform-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .platform-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            flex-grow: 1;
+        }
+
+        .platform-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .platform-link:hover {
+            background: var(--accent-color);
+        }
+
+        .week-section h5 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .week-section h6 {
+            color: var(--accent-color);
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .practice-questions {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--background-color);
+            border-radius: 5px;
+        }
+
+        .practice-questions ol {
+            margin-left: 1.5rem;
+        }
+
+        .practice-questions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .practice-questions a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .practice-questions a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-input {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .course-cards {
+                padding: 1rem;
+            }
+
+            .course-card {
+                min-width: 250px;
+            }
+
+            .platform-grid {
+                margin: 1rem;
+                width: calc(100% - 2rem);
+            }
+
+            .topic-card, .roadmap-section {
+                margin: 1rem;
+                width: calc(100% - 2rem);
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <div class="logo" style="background: transparent; box-shadow: none; margin-right: 0.5rem;">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="40" height="40">
+            </div>
+            <h1>Python Programming</h1>
+        </div>
+        <div class="nav-controls">
+            <input type="text" class="search-input" placeholder="Search topics...">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Toggle Theme
+            </button>
+        </div>
+    </nav>
+
+    <!-- Course Cards Section -->
+    <div class="course-cards">
+        <div class="course-card">
+            <h3>Programming Fundamentals using Python – Part 1</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 5 hours</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-star"></i> Rating: 4.5/5</span>
+                <span><i class="fas fa-list"></i> Features: Basic Python concepts, Syntax, Variables, Control structures</span>
+                <span><i class="fas fa-globe"></i> Platform: Infosys Springboard</span>
+                <a href="https://infyspringboard.onwingspan.com/web/en/page/certification-courses" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <h3>Programming Fundamentals using Python – Part 2</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 6 hours</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-star"></i> Rating: 4.5/5</span>
+                <span><i class="fas fa-list"></i> Features: Functions, Modules, Error handling, Beginner to Intermediate</span>
+                <span><i class="fas fa-globe"></i> Platform: Infosys Springboard</span>
+                <a href="https://infyspringboard.onwingspan.com/web/en/page/certification-courses" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <h3>Python Programming - CodeWithHarry</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 25 hours</span>
+                <span><i class="fas fa-tag"></i> Price: ₹499 (Use code: NVDINCTA35TRT)</span>
+                <span><i class="fas fa-star"></i> Rating: 4.8/5</span>
+                <span><i class="fas fa-list"></i> Features: Complete Python course, Practical projects, Hindi language support</span>
+                <span><i class="fas fa-globe"></i> Platform: Udemy</span>
+                <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=NVDINCTA35TRT" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <h3>Python for Beginners - CodeChef</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 8 weeks</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-star"></i> Rating: 4.6/5</span>
+                <span><i class="fas fa-list"></i> Features: Weekly contests, Practice problems, Certificate of completion</span>
+                <span><i class="fas fa-globe"></i> Platform: CodeChef</span>
+                <a href="https://www.codechef.com/learn/python" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Platforms Section -->
+    <div class="topic-card">
+        <h2>Practice Platforms</h2>
+        <div class="platform-grid">
+            <div class="platform-card">
+                <h3><i class="fas fa-code"></i> LeetCode</h3>
+                <p>Practice coding problems, participate in contests, and prepare for technical interviews.</p>
+                <a href="https://leetcode.com/problemset/all/" target="_blank" class="platform-link">Start Practicing</a>
+            </div>
+            <div class="platform-card">
+                <h3><i class="fas fa-laptop-code"></i> HackerRank</h3>
+                <p>Learn Python through interactive challenges and earn certificates.</p>
+                <a href="https://www.hackerrank.com/domains/python" target="_blank" class="platform-link">Start Practicing</a>
+            </div>
+            <div class="platform-card">
+                <h3><i class="fas fa-trophy"></i> CodeChef</h3>
+                <p>Participate in coding contests and solve practice problems.</p>
+                <a href="https://www.codechef.com/practice" target="_blank" class="platform-link">Start Practicing</a>
+            </div>
+            <div class="platform-card">
+                <h3><i class="fas fa-brain"></i> Kaggle</h3>
+                <p>Practice Python for data science and machine learning.</p>
+                <a href="https://www.kaggle.com/learn/python" target="_blank" class="platform-link">Start Learning</a>
+            </div>
+            <div class="platform-card" style="margin-top: 1.5rem;">
+                <h3>JetBrains Academy</h3>
+                <p>Interactive Python learning with real projects and guided tracks.</p>
+                <a href="https://academy.jetbrains.com/" target="_blank" class="platform-link" style="margin-top: 0.5rem;">View Course</a>
+            </div>
+        </div>
+        <div class="course-cards" style="margin-top: 2rem;">
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Introduction to Python</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Beginner-friendly, based on official Python documentation, project-based learning.</span>
+                    <span><i class="fas fa-signal"></i> Level: Beginner</span>
+                    <a href="https://academy.jetbrains.com/courses/introduction-to-python" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Python Developer (Hyperskill)</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Build a strong foundation for a career in tech, from basics to advanced projects.</span>
+                    <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
+                    <a href="https://hyperskill.org/tracks/2" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>Python Libraries - NumPy</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Introductory course on NumPy, hands-on exercises, best for those with basic Python knowledge.</span>
+                    <span><i class="fas fa-signal"></i> Level: Beginner/Intermediate</span>
+                    <a href="https://academy.jetbrains.com/courses/python-libraries-numpy" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+                <h3>UI Test Automation with Selenium and Python</h3>
+                <div class="course-details">
+                    <span><i class="fas fa-list"></i> Features: Learn automated UI tests with Python and Selenium, core Selenium features, practical projects.</span>
+                    <span><i class="fas fa-signal"></i> Level: Beginner/Intermediate</span>
+                    <a href="https://academy.jetbrains.com/courses/ui-test-automation-with-selenium-and-python" target="_blank" class="course-link">View Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <h2>12-Week Learning Roadmap</h2>
+        <p>Master Python programming with this comprehensive 12-week roadmap. Each week includes detailed topics, learning resources, and practice questions.</p>
+    </div>
+
+    <!-- Week 1-2: Python Fundamentals -->
+    <div class="roadmap-section">
+        <h3>Week 1-2: Python Fundamentals</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_intro.asp" target="_blank"><i class="fas fa-code"></i> Python Introduction & Setup</a></li>
+                <li><a href="https://www.w3schools.com/python/python_syntax.asp" target="_blank"><i class="fas fa-code"></i> Python Syntax & Comments</a></li>
+                <li><a href="https://www.w3schools.com/python/python_variables.asp" target="_blank"><i class="fas fa-code"></i> Variables & Data Types</a></li>
+                <li><a href="https://www.w3schools.com/python/python_operators.asp" target="_blank"><i class="fas fa-code"></i> Operators</a></li>
+                <li><a href="https://www.w3schools.com/python/python_strings.asp" target="_blank"><i class="fas fa-code"></i> Strings & Formatting</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-basic-exercise-4.php" target="_blank">Write a program to calculate the area of a circle given its radius.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-basic-exercise-14.php" target="_blank">Create a program that converts temperature from Celsius to Fahrenheit.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-basic-exercise-16.php" target="_blank">Write a program that takes a string and counts the frequency of each character.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-basic-exercise-66.php" target="_blank">Create a simple calculator that can perform basic arithmetic operations.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-basic-exercise-97.php" target="_blank">Implement a program that generates a password with specific requirements.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 3: Control Structures -->
+    <div class="roadmap-section">
+        <h3>Week 3: Control Structures</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_conditions.asp" target="_blank"><i class="fas fa-code"></i> If-Else Statements</a></li>
+                <li><a href="https://www.w3schools.com/python/python_for_loops.asp" target="_blank"><i class="fas fa-code"></i> For Loops</a></li>
+                <li><a href="https://www.w3schools.com/python/python_while_loops.asp" target="_blank"><i class="fas fa-code"></i> While Loops</a></li>
+                <li><a href="https://www.w3schools.com/python/python_break.asp" target="_blank"><i class="fas fa-code"></i> Break & Continue</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-conditional-statements-and-loops-exercise-1.php" target="_blank">Write a program to print the multiplication table of a given number.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-conditional-statements-and-loops-exercise-2.php" target="_blank">Create a program that checks if a number is prime or not.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-conditional-statements-and-loops-exercise-3.php" target="_blank">Implement a number guessing game with hints.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-conditional-statements-and-loops-exercise-4.php" target="_blank">Write a program to print different patterns using nested loops.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-conditional-statements-and-loops-exercise-5.php" target="_blank">Create a program that simulates a simple ATM machine with balance checking, withdrawal, and deposit functions.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 4: Functions & Recursion -->
+    <div class="roadmap-section">
+        <h3>Week 4: Functions & Recursion</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_functions.asp" target="_blank"><i class="fas fa-code"></i> Function Basics</a></li>
+                <li><a href="https://www.w3schools.com/python/python_function_arguments.asp" target="_blank"><i class="fas fa-code"></i> Function Arguments</a></li>
+                <li><a href="https://www.w3schools.com/python/python_lambda.asp" target="_blank"><i class="fas fa-code"></i> Lambda Functions</a></li>
+                <li><a href="https://www.w3schools.com/python/python_recursion.asp" target="_blank"><i class="fas fa-code"></i> Recursion</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-functions-exercise-1.php" target="_blank">Write a function to calculate the factorial of a number.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-functions-exercise-2.php" target="_blank">Create a function that checks if a string is a palindrome.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-functions-exercise-3.php" target="_blank">Implement a recursive function to find the nth Fibonacci number.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-functions-exercise-4.php" target="_blank">Write a function that sorts a list using the bubble sort algorithm.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-functions-exercise-5.php" target="_blank">Create a function that implements the Tower of Hanoi puzzle using recursion.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 5-6: Data Structures -->
+    <div class="roadmap-section">
+        <h3>Week 5-6: Data Structures</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_lists.asp" target="_blank"><i class="fas fa-code"></i> Lists</a></li>
+                <li><a href="https://www.w3schools.com/python/python_tuples.asp" target="_blank"><i class="fas fa-code"></i> Tuples</a></li>
+                <li><a href="https://www.w3schools.com/python/python_sets.asp" target="_blank"><i class="fas fa-code"></i> Sets</a></li>
+                <li><a href="https://www.w3schools.com/python/python_dictionaries.asp" target="_blank"><i class="fas fa-code"></i> Dictionaries</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-list-exercise-1.php" target="_blank">Write a program to find the largest and smallest numbers in a list.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-dictionary-exercise-1.php" target="_blank">Create a program that counts the frequency of words in a string using a dictionary.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-list-exercise-2.php" target="_blank">Implement a program that merges two sorted lists into a single sorted list.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-set-exercise-1.php" target="_blank">Write a program that finds common elements between two lists using sets.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-dictionary-exercise-2.php" target="_blank">Create a program that implements a simple database using nested dictionaries and lists.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 7: Modules & Exception Handling -->
+    <div class="roadmap-section">
+        <h3>Week 7: Modules & Exception Handling</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_modules.asp" target="_blank"><i class="fas fa-code"></i> Modules</a></li>
+                <li><a href="https://www.w3schools.com/python/python_math.asp" target="_blank"><i class="fas fa-code"></i> Math Module</a></li>
+                <li><a href="https://www.w3schools.com/python/python_datetime.asp" target="_blank"><i class="fas fa-code"></i> DateTime Module</a></li>
+                <li><a href="https://www.w3schools.com/python/python_try_except.asp" target="_blank"><i class="fas fa-code"></i> Exception Handling</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-math-exercise-1.php" target="_blank">Write a program that uses the math module to calculate the area of different shapes.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-datetime-exercise-1.php" target="_blank">Create a program that displays the current date and time in different formats.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-exception-handling-exercise-1.php" target="_blank">Implement a program that handles different types of exceptions in a calculator.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-random-exercise-1.php" target="_blank">Write a program that uses the random module to generate a password.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-datetime-exercise-2.php" target="_blank">Create a program that implements a simple task scheduler using the datetime module.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 8-9: OOP Part 1 -->
+    <div class="roadmap-section">
+        <h3>Week 8-9: Object-Oriented Programming (Part 1)</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_classes.asp" target="_blank"><i class="fas fa-code"></i> Classes & Objects</a></li>
+                <li><a href="https://www.w3schools.com/python/python_classes_objects.asp" target="_blank"><i class="fas fa-code"></i> Class Methods</a></li>
+                <li><a href="https://www.w3schools.com/python/python_classes_init.asp" target="_blank"><i class="fas fa-code"></i> Constructors</a></li>
+                <li><a href="https://www.w3schools.com/python/python_classes_self.asp" target="_blank"><i class="fas fa-code"></i> Self Parameter</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-class-exercise-1.php" target="_blank">Create a Student class with basic attributes and methods.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-class-exercise-2.php" target="_blank">Implement a Rectangle class with area and perimeter calculations.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-class-exercise-3.php" target="_blank">Write a BankAccount class with deposit and withdrawal methods.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-class-exercise-4.php" target="_blank">Create a Library class to manage books and members.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-class-exercise-5.php" target="_blank">Implement a simple e-commerce system with Product, Customer, and Order classes.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 10: OOP Part 2 -->
+    <div class="roadmap-section">
+        <h3>Week 10: Object-Oriented Programming (Part 2)</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_inheritance.asp" target="_blank"><i class="fas fa-code"></i> Inheritance</a></li>
+                <li><a href="https://www.w3schools.com/python/python_polymorphism.asp" target="_blank"><i class="fas fa-code"></i> Polymorphism</a></li>
+                <li><a href="https://www.geeksforgeeks.org/encapsulation-in-python/" target="_blank"><i class="fas fa-code"></i> Encapsulation</a></li>
+                <li><a href="https://realpython.com/python-super/" target="_blank"><i class="fas fa-code"></i> Super() Function</a></li>
+            </ul>
+            <div class="code-example">
+                <pre><code>class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def __str__(self):
+        return f"{self.name} is {self.age} years old"
+    
+    def __repr__(self):
+        return f"Person('{self.name}', {self.age})"
+    
+    def __len__(self):
+        return len(self.name)
+    
+    def __eq__(self, other):
+        if not isinstance(other, Person):
+            return False
+        return self.name == other.name and self.age == other.age
+    
+    def __lt__(self, other):
+        return self.age < other.age
+    
+    def __add__(self, other):
+        return Person(f"{self.name} {other.name}", self.age + other.age)</code></pre>
+                <div class="method-explanation">
+                    <h5>Common Special Methods:</h5>
+                    <ul>
+                        <li><code>__init__(self, ...)</code>: Constructor method, called when creating a new instance</li>
+                        <li><code>__str__(self)</code>: String representation for print() and str()</li>
+                        <li><code>__repr__(self)</code>: Detailed string representation for debugging</li>
+                        <li><code>__len__(self)</code>: Called by len() function</li>
+                        <li><code>__eq__(self, other)</code>: Equality comparison (==)</li>
+                        <li><code>__lt__(self, other)</code>: Less than comparison (<)</li>
+                        <li><code>__add__(self, other)</code>: Addition operation (+)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-inheritance-exercise-1.php" target="_blank">Create a hierarchy of shapes using inheritance.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-inheritance-exercise-2.php" target="_blank">Implement a simple animal class hierarchy.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-inheritance-exercise-3.php" target="_blank">Write a program demonstrating method overriding in a banking system.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-inheritance-exercise-4.php" target="_blank">Create a class hierarchy for different types of employees.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-inheritance-exercise-5.php" target="_blank">Implement a complex inheritance hierarchy for a vehicle management system.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 11: File Handling -->
+    <div class="roadmap-section">
+        <h3>Week 11: File Handling</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3schools.com/python/python_file_handling.asp" target="_blank"><i class="fas fa-code"></i> File Operations</a></li>
+                <li><a href="https://www.w3schools.com/python/python_file_open.asp" target="_blank"><i class="fas fa-code"></i> File Modes</a></li>
+                <li><a href="https://www.w3schools.com/python/python_file_write.asp" target="_blank"><i class="fas fa-code"></i> Writing Files</a></li>
+                <li><a href="https://www.w3schools.com/python/python_file_read.asp" target="_blank"><i class="fas fa-code"></i> Reading Files</a></li>
+            </ul>
+            <div class="practice-questions">
+                <h5>Easy</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-file-exercise-1.php" target="_blank">Write a program to read and display the contents of a text file.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-file-exercise-2.php" target="_blank">Create a program that writes user input to a file.</a></li>
+                </ol>
+                <h5>Medium</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-file-exercise-3.php" target="_blank">Implement a program that copies the contents of one file to another.</a></li>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-file-exercise-4.php" target="_blank">Write a program that counts the number of words in a file.</a></li>
+                </ol>
+                <h5>Hard</h5>
+                <ol>
+                    <li><a href="https://www.w3resource.com/python-exercises/python-file-exercise-5.php" target="_blank">Create a simple text-based database system using file operations.</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Week 12: Final Project -->
+    <div class="roadmap-section">
+        <h3>Week 12: Final Project</h3>
+        <div class="roadmap-content">
+            <ul class="resource-list">
+                <li><a href="https://www.w3resource.com/python-exercises/project/python-project-exercise-1.php" target="_blank"><i class="fas fa-code"></i> Student Management System</a></li>
+                <li><a href="https://www.w3resource.com/python-exercises/project/python-project-exercise-2.php" target="_blank"><i class="fas fa-code"></i> Inventory Management System</a></li>
+                <li><a href="https://www.w3resource.com/python-exercises/project/python-project-exercise-3.php" target="_blank"><i class="fas fa-code"></i> Banking System</a></li>
+                <li><a href="https://www.w3resource.com/python-exercises/project/python-project-exercise-4.php" target="_blank"><i class="fas fa-code"></i> Quiz Application</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Advanced Topics Section -->
+    <div class="topic-card">
+        <h2>Advanced Python Topics</h2>
+        <p>After completing the 12-week Python course, explore these advanced topics to enhance your skills.</p>
+    </div>
+
+    <!-- DSA Certification Courses -->
+    <div class="course-cards">
+        <div class="course-card">
+            <h3>Data Structures & Algorithms in Python – Self-Paced</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 45+ hours</span>
+                <span><i class="fas fa-tag"></i> Price: ₹4,999</span>
+                <span><i class="fas fa-star"></i> Rating: 4.7/5</span>
+                <span><i class="fas fa-list"></i> Features: 200+ practice problems, 250+ MCQs, 10 coding contests</span>
+                <span><i class="fas fa-globe"></i> Platform: GeeksforGeeks</span>
+                <a href="https://practice.geeksforgeeks.org/courses/Data-Structures-With-Python" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <h3>The Complete Data Structures and Algorithms Course in Python</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 40+ hours</span>
+                <span><i class="fas fa-tag"></i> Price: ₹3,499</span>
+                <span><i class="fas fa-star"></i> Rating: 4.8/5</span>
+                <span><i class="fas fa-list"></i> Features: 100+ interview questions, Visual explanations, Lifetime access</span>
+                <span><i class="fas fa-globe"></i> Platform: Udemy</span>
+                <a href="https://www.udemy.com/course/data-structures-and-algorithms-bootcamp-in-python/" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <h3>Python Data Structures – University of Michigan</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 8 weeks</span>
+                <span><i class="fas fa-tag"></i> Price: Free (Certificate: ₹3,999)</span>
+                <span><i class="fas fa-star"></i> Rating: 4.6/5</span>
+                <span><i class="fas fa-list"></i> Features: Part of Python for Everybody, Quizzes, Assignments</span>
+                <span><i class="fas fa-globe"></i> Platform: Coursera</span>
+                <a href="https://www.coursera.org/learn/python-data" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <h3>Python Data Structures – edX (University of Michigan)</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 7 weeks</span>
+                <span><i class="fas fa-tag"></i> Price: Free (Certificate: ₹4,999)</span>
+                <span><i class="fas fa-star"></i> Rating: 4.5/5</span>
+                <span><i class="fas fa-list"></i> Features: Complex data analysis, Verified certificate</span>
+                <span><i class="fas fa-globe"></i> Platform: edX</span>
+                <a href="https://www.edx.org/learn/python/the-university-of-michigan-python-data-structures" target="_blank" class="course-link">View Course</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Structures & Algorithms -->
+    <div class="roadmap-section">
+        <h3>Data Structures & Algorithms in Python</h3>
+        <div class="roadmap-content">
+            <div class="week-section">
+                <h5>Week 1-2: Python Essentials for DSA</h5>
+                <ol>
+                    <li><a href="https://www.w3schools.com/python/python_syntax.asp" target="_blank"><i class="fas fa-code"></i> Python Syntax Refresher</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_functions.asp" target="_blank"><i class="fas fa-code"></i> Functions and Recursion</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_lists.asp" target="_blank"><i class="fas fa-code"></i> List, Tuple, Set, and Dictionary Methods</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_strings.asp" target="_blank"><i class="fas fa-code"></i> Input/Output and String Handling</a></li>
+                </ol>
+                <div class="practice-questions">
+                    <h6>LeetCode Practice Questions:</h6>
+                    <ol>
+                        <li><a href="https://leetcode.com/problems/two-sum/" target="_blank">Two Sum</a></li>
+                        <li><a href="https://leetcode.com/problems/valid-parentheses/" target="_blank">Valid Parentheses</a></li>
+                        <li><a href="https://leetcode.com/problems/merge-sorted-array/" target="_blank">Merge Sorted Array</a></li>
+                        <li><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">Best Time to Buy and Sell Stock</a></li>
+                        <li><a href="https://leetcode.com/problems/valid-palindrome/" target="_blank">Valid Palindrome</a></li>
+                        <li><a href="https://leetcode.com/problems/implement-strstr/" target="_blank">Implement strStr()</a></li>
+                        <li><a href="https://leetcode.com/problems/roman-to-integer/" target="_blank">Roman to Integer</a></li>
+                        <li><a href="https://leetcode.com/problems/longest-common-prefix/" target="_blank">Longest Common Prefix</a></li>
+                        <li><a href="https://leetcode.com/problems/climbing-stairs/" target="_blank">Climbing Stairs</a></li>
+                        <li><a href="https://leetcode.com/problems/plus-one/" target="_blank">Plus One</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="week-section">
+                <h5>Week 3: Time & Space Complexity</h5>
+                <ol>
+                    <li><a href="https://www.geeksforgeeks.org/understanding-time-complexity-simple-examples/" target="_blank"><i class="fas fa-code"></i> Big O Notation</a></li>
+                    <li><a href="https://www.geeksforgeeks.org/time-vs-space-complexity/" target="_blank"><i class="fas fa-code"></i> Time vs Space Tradeoffs</a></li>
+                    <li><a href="https://www.geeksforgeeks.org/analysis-of-algorithms-set-2-asymptotic-analysis/" target="_blank"><i class="fas fa-code"></i> Best, Average, Worst Case Analysis</a></li>
+                </ol>
+                <div class="practice-questions">
+                    <h6>LeetCode Practice Questions:</h6>
+                    <ol>
+                        <li><a href="https://leetcode.com/problems/fibonacci-number/" target="_blank">Fibonacci Number</a></li>
+                        <li><a href="https://leetcode.com/problems/power-of-two/" target="_blank">Power of Two</a></li>
+                        <li><a href="https://leetcode.com/problems/counting-bits/" target="_blank">Counting Bits</a></li>
+                        <li><a href="https://leetcode.com/problems/number-of-1-bits/" target="_blank">Number of 1 Bits</a></li>
+                        <li><a href="https://leetcode.com/problems/reverse-bits/" target="_blank">Reverse Bits</a></li>
+                        <li><a href="https://leetcode.com/problems/single-number/" target="_blank">Single Number</a></li>
+                        <li><a href="https://leetcode.com/problems/missing-number/" target="_blank">Missing Number</a></li>
+                        <li><a href="https://leetcode.com/problems/sum-of-two-integers/" target="_blank">Sum of Two Integers</a></li>
+                        <li><a href="https://leetcode.com/problems/reverse-integer/" target="_blank">Reverse Integer</a></li>
+                        <li><a href="https://leetcode.com/problems/palindrome-number/" target="_blank">Palindrome Number</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="week-section">
+                <h5>Week 4: Arrays & Strings</h5>
+                <ol>
+                    <li><a href="https://leetcode.com/tag/array/" target="_blank"><i class="fas fa-code"></i> 1D and 2D Arrays</a></li>
+                    <li><a href="https://leetcode.com/tag/two-pointers/" target="_blank"><i class="fas fa-code"></i> Sliding Window, Two Pointers</a></li>
+                    <li><a href="https://www.hackerrank.com/domains/python/py-strings" target="_blank"><i class="fas fa-code"></i> String Manipulation</a></li>
+                </ol>
+                <div class="practice-questions">
+                    <h6>LeetCode Practice Questions:</h6>
+                    <ol>
+                        <li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/" target="_blank">Remove Duplicates from Sorted Array</a></li>
+                        <li><a href="https://leetcode.com/problems/rotate-array/" target="_blank">Rotate Array</a></li>
+                        <li><a href="https://leetcode.com/problems/contains-duplicate/" target="_blank">Contains Duplicate</a></li>
+                        <li><a href="https://leetcode.com/problems/single-number/" target="_blank">Single Number</a></li>
+                        <li><a href="https://leetcode.com/problems/intersection-of-two-arrays/" target="_blank">Intersection of Two Arrays</a></li>
+                        <li><a href="https://leetcode.com/problems/move-zeroes/" target="_blank">Move Zeroes</a></li>
+                        <li><a href="https://leetcode.com/problems/reverse-string/" target="_blank">Reverse String</a></li>
+                        <li><a href="https://leetcode.com/problems/reverse-vowels-of-a-string/" target="_blank">Reverse Vowels of a String</a></li>
+                        <li><a href="https://leetcode.com/problems/valid-anagram/" target="_blank">Valid Anagram</a></li>
+                        <li><a href="https://leetcode.com/problems/group-anagrams/" target="_blank">Group Anagrams</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="week-section">
+                <h5>Week 5: Linked Lists</h5>
+                <ol>
+                    <li><a href="https://www.programiz.com/python-programming/linked-list" target="_blank"><i class="fas fa-code"></i> Singly & Doubly Linked Lists</a></li>
+                    <li><a href="https://leetcode.com/tag/linked-list/" target="_blank"><i class="fas fa-code"></i> Linked List Operations</a></li>
+                    <li><a href="https://leetcode.com/problems/linked-list-cycle/" target="_blank"><i class="fas fa-code"></i> Detect Loops</a></li>
+                </ol>
+                <div class="practice-questions">
+                    <h6>LeetCode Practice Questions:</h6>
+                    <ol>
+                        <li><a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank">Reverse Linked List</a></li>
+                        <li><a href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank">Merge Two Sorted Lists</a></li>
+                        <li><a href="https://leetcode.com/problems/linked-list-cycle/" target="_blank">Linked List Cycle</a></li>
+                        <li><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/" target="_blank">Remove Nth Node From End of List</a></li>
+                        <li><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank">Add Two Numbers</a></li>
+                        <li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/" target="_blank">Remove Duplicates from Sorted List</a></li>
+                        <li><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/" target="_blank">Intersection of Two Linked Lists</a></li>
+                        <li><a href="https://leetcode.com/problems/palindrome-linked-list/" target="_blank">Palindrome Linked List</a></li>
+                        <li><a href="https://leetcode.com/problems/delete-node-in-a-linked-list/" target="_blank">Delete Node in a Linked List</a></li>
+                        <li><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank">Odd Even Linked List</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Continue with remaining weeks... -->
+            <!-- Add similar sections for Weeks 6-12 with their respective LeetCode questions -->
+
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+
+        // Initialize all sections as collapsed
+        document.querySelectorAll('.roadmap-section').forEach(section => {
+            section.classList.add('collapsed');
+        });
+
+        // Collapsible Sections
+        document.querySelectorAll('.roadmap-section h3').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('collapsed');
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.roadmap-section').forEach(section => {
+                const content = section.textContent.toLowerCase();
+                section.style.display = content.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html> 
