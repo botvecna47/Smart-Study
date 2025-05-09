@@ -4,138 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Study Portal</title>
+    <!-- Using Poppins font for clean, readable text -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for simple icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="https://th.bing.com/th/id/OIP.jOLSlI8WOXBNj-R6jkuX1AAAAA?cb=iwc1&rs=1&pid=ImgDetMain">
     <style>
+        /* Basic color scheme - keeping it simple and easy on the eyes */
         :root {
-            --primary-color: #6c47ff;
-            --secondary-color: #b39ddb;
-            --accent-color: #9575cd;
-            --background-color: #f3f0fa;
-            --card-background: #fff;
-            --text-color: #2c2c2c;
-            --shadow-color: rgba(108, 71, 255, 0.08);
+            --primary-color: #4a90e2;    /* Nice blue color */
+            --secondary-color: #f5f5f5;   /* Light gray for backgrounds */
+            --text-color: #333;          /* Dark gray for text */
+            --card-bg: #fff;             /* White for cards */
+            --border-color: #ddd;        /* Light gray for borders */
         }
+
+        /* Basic reset and body styles */
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--background-color);
+            background: var(--secondary-color);
             color: var(--text-color);
             margin: 0;
             min-height: 100vh;
+            line-height: 1.6;
         }
+
+        /* Simple navbar with basic shadow */
         .navbar {
             background: var(--primary-color);
-            color: #fff;
-            padding: 1.5rem 2rem;
+            color: white;
+            padding: 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 8px var(--shadow-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .navbar h1 {
             margin: 0;
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-weight: 500;
         }
-        .navbar .search-input {
-            padding: 0.7rem 1.2rem;
-            border-radius: 6px;
+
+        /* Simple search input */
+        .search-input {
+            padding: 0.5rem 1rem;
             border: none;
+            border-radius: 4px;
             font-size: 1rem;
-            width: 320px;
+            width: 300px;
             max-width: 100%;
-            outline: none;
         }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        /* Main container with max-width for readability */
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
+
+        /* Welcome section with centered text */
         .welcome {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
+
         .welcome h2 {
             color: var(--primary-color);
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
         }
+
         .welcome p {
-            color: #555;
+            color: #666;
             font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
+
+        /* Simple card grid layout */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
+
+        /* Basic card design with subtle hover effect */
         .card {
-            background: var(--card-background);
-            border-radius: 16px;
-            box-shadow: 0 4px 16px var(--shadow-color);
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
+            text-align: center;
+            transition: transform 0.2s ease;
         }
+
         .card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 8px 24px var(--shadow-color);
+            transform: translateY(-5px);
         }
+
+        /* Simple logo container */
         .card .logo {
-            width: 64px;
-            height: 64px;
+            width: 60px;
+            height: 60px;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--secondary-color);
-            border-radius: 50%;
-            font-size: 2.5rem;
         }
+
+        .card .logo img {
+            max-width: 100%;
+            height: auto;
+        }
+
         .card h3 {
-            margin: 0 0 0.5rem 0;
             color: var(--primary-color);
-            font-size: 1.3rem;
-            font-weight: 600;
-            text-align: center;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
         }
+
         .card p {
-            color: #555;
-            font-size: 1rem;
-            text-align: center;
-            margin-bottom: 1.2rem;
+            color: #666;
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
         }
+
+        /* Simple button style */
         .card a {
-            margin-top: auto;
+            display: inline-block;
             background: var(--primary-color);
-            color: #fff;
+            color: white;
             text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: background 0.2s;
-            box-shadow: 0 2px 8px var(--shadow-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease;
         }
+
         .card a:hover {
-            background: var(--accent-color);
+            background: #357abd;
         }
-        @media (max-width: 600px) {
+
+        /* Section headings */
+        h2 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        /* Mobile-friendly adjustments */
+        @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
                 gap: 1rem;
-                padding: 1rem;
+                text-align: center;
             }
+
+            .search-input {
+                width: 100%;
+            }
+
             .container {
                 margin: 1rem auto;
             }
+
             .card {
-                padding: 1.2rem 0.7rem 1rem 0.7rem;
+                padding: 1rem;
+            }
+
+            .welcome h2 {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -145,14 +194,15 @@
         <h1>Smart Study Portal</h1>
         <input type="text" class="search-input" placeholder="Search subjects or languages..." oninput="filterCards()">
     </nav>
+
     <div class="container">
         <div class="welcome">
             <h2>Welcome to the Smart Study Portal</h2>
             <p>Choose a subject or programming language to start your learning journey. Each card provides resources, roadmaps, and practice questions to help you master the topic.</p>
         </div>
         
-        <!-- Computer Science Subjects Section -->
-        <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Computer Science Subjects</h2>
+        <!-- Computer Science Subjects -->
+        <h2>Computer Science Subjects</h2>
         <div class="card-grid" id="subjectGrid">
             <div class="card" data-title="Data Structures">
                 <h3>Data Structures</h3>
@@ -171,41 +221,53 @@
             </div>
         </div>
 
-        <!-- Programming Languages Section -->
-        <h2 style="color: var(--primary-color); margin: 2.5rem 0 1rem 0;">Programming Languages</h2>
+        <!-- Programming Languages -->
+        <h2>Programming Languages</h2>
         <div class="card-grid" id="languageGrid">
             <div class="card" data-title="Python">
-                <div class="logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="48"></div>
+                <div class="logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                </div>
                 <h3>Python</h3>
-                <p>Beginner-friendly, versatile, and widely used for web, data science, and automation.</p>
+                <p >Beginner-friendly, versatile, and widely used for web,<br> data science, and automation.</p>
                 <a href="languages/python.html">Start Learning</a>
             </div>
             <div class="card" data-title="Java">
-                <div class="logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" width="48"></div>
+                <div class="logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                </div>
                 <h3>Java</h3>
                 <p>Popular for enterprise, Android, and backend development. Strong OOP foundation.</p>
                 <a href="languages/java.html">Start Learning</a>
             </div>
             <div class="card" data-title="C">
-                <div class="logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" width="48"></div>
+                <div class="logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
+                </div>
                 <h3>C</h3>
                 <p>Powerful low-level language, great for system programming and embedded systems.</p>
                 <a href="#">Start Learning</a>
             </div>
             <div class="card" data-title="C++">
-                <div class="logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" width="48"></div>
+                <div class="logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+                </div>
                 <h3>C++</h3>
                 <p>Widely used for competitive programming, game development, and high-performance apps.</p>
                 <a href="#">Start Learning</a>
             </div>
             <div class="card" data-title="Web Development">
-                <div class="logo"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="Web" width="48"></div>
+                <div class="logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="Web">
+                </div>
                 <h3>Web Development</h3>
                 <p>Learn HTML, CSS, JavaScript, and frameworks to build modern web applications.</p>
                 <a href="#">Start Learning</a>
             </div>
         </div>
     </div>
+
+    <!-- Simple search functionality -->
     <script>
         function filterCards() {
             const input = document.querySelector('.search-input').value.toLowerCase();
