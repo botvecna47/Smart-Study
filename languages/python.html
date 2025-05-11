@@ -24,12 +24,12 @@
         }
 
         [data-theme="dark"] {
-            --primary-color: #1a3a4f;
+            --primary-color: #306998;
             --secondary-color: #ffd43b;
-            --text-color: #f3f3f3;
-            --background-color: #181c20;
-            --card-background: #232a31;
-            --border-color: #555b60;
+            --text-color: #e0e0e0;
+            --background-color: #1a1a1a;
+            --card-background: #2d2d2d;
+            --border-color: #404040;
         }
 
         body {
@@ -105,6 +105,7 @@
             align-items: center;
         }
 
+        /* Theme toggle button */
         .theme-toggle {
             background: var(--secondary-color);
             color: var(--primary-color);
@@ -112,11 +113,39 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            min-width: 120px;
+            justify-content: center;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .theme-toggle:hover {
-            background: #e6c02f;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: translateY(-50%) scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:active {
+            transform: translateY(-50%) scale(0.98);
+        }
+
+        .theme-toggle i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(15deg);
         }
 
         .search-input {
@@ -135,6 +164,18 @@
         }
 
         /* Course cards styles */
+        .card-section {
+            margin: 1rem auto;
+            margin-top: 2rem;
+            max-width: 1400px;
+            width: 90%;
+        }
+
+        .card-section hr {
+            margin-top: 8px;
+            border: 2px solid var(--secondary-color);
+        }
+
         .course-cards {
             display: flex;
             flex-wrap: nowrap;
@@ -170,9 +211,9 @@
             display: flex;
             flex-direction: column;
             min-width: 300px;
-            max-width: 350px;
+            max-width: 300px;
             flex: 0 0 auto;
-            height: 100%;
+            height: 450px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -196,7 +237,22 @@
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            min-height: 200px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .course-details::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .course-details::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .course-details::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 2px;
         }
 
         .course-details span {
@@ -234,30 +290,13 @@
 
         /* Platform grid styles */
         .platform-grid {
-            display: flex;
-            flex-wrap: nowrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
-            margin: 1rem auto;
             padding: 1rem;
+            margin: 1rem auto;
             max-width: 1400px;
             width: 90%;
-            overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--secondary-color) var(--border-color);
-        }
-
-        .platform-grid::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .platform-grid::-webkit-scrollbar-track {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        .platform-grid::-webkit-scrollbar-thumb {
-            background: var(--secondary-color);
-            border-radius: 4px;
         }
 
         .platform-card {
@@ -267,10 +306,9 @@
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            min-width: 250px;
+            min-width: 300px;
             max-width: 300px;
             flex: 0 0 auto;
-            height: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -292,7 +330,8 @@
         .platform-card p {
             margin-bottom: 1rem;
             flex-grow: 1;
-            min-height: 100px;
+            padding: 0.5rem;
+            padding-right: 0.5rem;
         }
 
         .platform-link {
@@ -304,10 +343,10 @@
             border-radius: 4px;
             font-weight: 500;
             text-align: center;
+            margin-top: auto;
             transition: all 0.3s ease;
             width: 100%;
             box-sizing: border-box;
-            margin-top: auto;
         }
 
         .platform-link:hover {
@@ -315,6 +354,26 @@
             color: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dark theme adjustments */
+        [data-theme="dark"] .platform-card {
+            background: var(--card-background);
+            border-color: var(--primary-color);
+        }
+
+        [data-theme="dark"] .platform-card h3 {
+            color: var(--primary-color);
+        }
+
+        [data-theme="dark"] .platform-link {
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .platform-link:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
         }
 
         /* Roadmap section styles */
@@ -376,7 +435,7 @@
         /* Topic card styles */
         .topic-card {
             background: var(--card-background);
-            border: 1px solid var(--border-color);
+            border: none;
             border-radius: 4px;
             align-items: center;
             padding: 1.5rem;
@@ -432,7 +491,7 @@
             .navbar {
                 flex-direction: column;
                 gap: 1rem;
-                padding: 1rem;
+                padding: 1rem 1rem 1rem 140px;
             }
 
             .nav-left {
@@ -480,6 +539,16 @@
                 padding: 0.6rem 1.2rem;
                 font-size: 0.9rem;
             }
+
+            .theme-toggle {
+                right: 0.5rem;
+                min-width: 110px;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .theme-toggle i {
+                font-size: 1rem;
+            }
         }
 
         /* Small mobile devices */
@@ -512,6 +581,19 @@
                 padding: 0.5rem 1rem;
                 font-size: 0.85rem;
             }
+
+            .navbar {
+                padding: 0.8rem 0.8rem 0.8rem 120px;
+            }
+
+            .theme-toggle {
+                min-width: 100px;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .theme-toggle i {
+                font-size: 0.9rem;
+            }
         }
 
         /* Main container for all content */
@@ -526,6 +608,27 @@
         .section {
             margin: 2rem auto;
             width: 100%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .platform-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Update the More Resources section cards */
+        .course-cards .course-card[style*="max-width: 400px"] {
+            max-width: 300px !important;
+            min-width: 300px !important;
+            flex: 0 0 auto !important;
+            height: 450px !important;
         }
     </style>
 </head>
@@ -543,7 +646,6 @@
             <h1>Python Programming</h1>
         </div>
         <div class="nav-controls">
-            <input type="text" class="search-input" placeholder="Search topics...">
             <button class="theme-toggle" onclick="toggleTheme()">
                 <i class="fas fa-moon"></i> Toggle Theme
             </button>
@@ -558,39 +660,42 @@
                 <span><i class="far fa-clock"></i> Duration: 5 hours</span>
                 <span><i class="fas fa-tag"></i> Price: Free</span>
                 <span><i class="fas fa-star"></i> Rating: 4.5/5</span>
+                <span><i class="fas fa-signal"></i> Level: Absolute Beginner to Beginner</span>
                 <span><i class="fas fa-list"></i> Features: Basic Python concepts, Syntax, Variables, Control
                     structures</span>
                 <span><i class="fas fa-globe"></i> Platform: Infosys Springboard</span>
-                <a href="https://infyspringboard.onwingspan.com/web/en/page/certification-courses" target="_blank"
-                    class="course-link">View Course</a>
             </div>
+            <a href="https://infyspringboard.onwingspan.com/web/en/page/certification-courses" target="_blank"
+                class="course-link">View Course</a>
         </div>
 
         <div class="course-card">
             <h3>Programming Fundamentals using Python – Part 2</h3>
             <div class="course-details">
                 <span><i class="far fa-clock"></i> Duration: 6 hours</span>
-                <span><i class="fas fa-tag"></i> Price: Free </span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
                 <span><i class="fas fa-star"></i> Rating: 4.5/5</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Intermediate</span>
                 <span><i class="fas fa-list"></i> Features: Functions, Modules, Error handling, Beginner to
                     Intermediate</span>
                 <span><i class="fas fa-globe"></i> Platform: Infosys Springboard</span>
-                <a href="https://infyspringboard.onwingspan.com/web/en/page/certification-courses" target="_blank"
-                    class="course-link">View Course</a>
             </div>
+            <a href="https://infyspringboard.onwingspan.com/web/en/page/certification-courses" target="_blank"
+                class="course-link">View Course</a>
         </div>
 
         <div class="course-card">
             <h3>Python Programming - CodeWithHarry</h3>
             <div class="course-details">
                 <span><i class="far fa-clock"></i> Duration: 25 hours</span>
-                <span><i class="fas fa-tag"></i> Price: ₹499 </span>
+                <span><i class="fas fa-tag"></i> Price: ₹499</span>
                 <span><i class="fas fa-star"></i> Rating: 4.8/5</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
                 <span><i class="fas fa-list"></i> Features: Complete Python course, Practical projects</span>
                 <span><i class="fas fa-globe"></i> Platform: Udemy</span>
-                <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=NVDINCTA35TRT" target="_blank"
-                    class="course-link">View Course</a>
             </div>
+            <a href="https://www.udemy.com/course/codewithharry-python/?couponCode=NVDINCTA35TRT" target="_blank"
+                class="course-link">View Course</a>
         </div>
 
         <div class="course-card">
@@ -599,17 +704,90 @@
                 <span><i class="far fa-clock"></i> Duration: 8 weeks</span>
                 <span><i class="fas fa-tag"></i> Price: Free</span>
                 <span><i class="fas fa-star"></i> Rating: 4.6/5</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Intermediate</span>
                 <span><i class="fas fa-list"></i> Features: Weekly contests, Practice problems, Certificate of
                     completion</span>
                 <span><i class="fas fa-globe"></i> Platform: CodeChef</span>
-                <a href="https://www.codechef.com/learn/python" target="_blank" class="course-link">View Course</a>
             </div>
+            <a href="https://www.codechef.com/learn/python" target="_blank" class="course-link">View Course</a>
+        </div>
+
+        <div class="course-card">
+            <h3>freeCodeCamp Python Course</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: Self-paced</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
+                <span><i class="fas fa-graduation-cap"></i> Format: Video + Interactive</span>
+                <span><i class="fas fa-certificate"></i> Certificate: Yes</span>
+                <span><i class="fas fa-list"></i> Features: Complete Python course with projects</span>
+            </div>
+            <a href="https://www.freecodecamp.org/news/learn-python-free-python-courses-for-beginners/"
+                class="course-link" target="_blank">Start Learning</a>
+        </div>
+
+        <div class="course-card">
+            <h3>GeeksforGeeks Python Course</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 3 Weeks</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Intermediate</span>
+                <span><i class="fas fa-graduation-cap"></i> Format: Self-paced</span>
+                <span><i class="fas fa-certificate"></i> Certificate: Yes</span>
+                <span><i class="fas fa-list"></i> Features: Comprehensive coverage of Python basics</span>
+            </div>
+            <a href="https://www.geeksforgeeks.org/courses/python-course-certification-free" class="course-link"
+                target="_blank">Start Learning</a>
+        </div>
+
+        <div class="course-card">
+            <h3>Scaler Python Course</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: 9h 44m</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Intermediate</span>
+                <span><i class="fas fa-graduation-cap"></i> Format: Video + Challenges</span>
+                <span><i class="fas fa-certificate"></i> Certificate: Yes</span>
+                <span><i class="fas fa-list"></i> Features: Hands-on projects and challenges</span>
+            </div>
+            <a href="https://www.scaler.com/topics/course/python-for-beginners/" class="course-link"
+                target="_blank">Start Learning</a>
+        </div>
+
+        <div class="course-card">
+            <h3>Codecademy Python Course</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: Self-paced</span>
+                <span><i class="fas fa-tag"></i> Price: Free (Pro: ₹1,999/month)</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
+                <span><i class="fas fa-graduation-cap"></i> Format: Interactive</span>
+                <span><i class="fas fa-certificate"></i> Certificate: Yes (Pro)</span>
+                <span><i class="fas fa-list"></i> Features: Interactive coding exercises</span>
+            </div>
+            <a href="https://www.codecademy.com/catalog/language/python" class="course-link" target="_blank">Start
+                Learning</a>
+        </div>
+
+        <div class="course-card">
+            <h3>Programiz Python Course</h3>
+            <div class="course-details">
+                <span><i class="far fa-clock"></i> Duration: Self-paced</span>
+                <span><i class="fas fa-tag"></i> Price: Free</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
+                <span><i class="fas fa-graduation-cap"></i> Format: Interactive + Examples</span>
+                <span><i class="fas fa-certificate"></i> Certificate: No</span>
+                <span><i class="fas fa-list"></i> Features: Practical examples and tutorials</span>
+            </div>
+            <a href="https://www.programiz.com/python-programming" class="course-link" target="_blank">Start
+                Learning</a>
         </div>
     </div>
 
     <!-- Practice Platforms Section -->
-    <div class="topic-card">
+    <div class="card-section">
         <h2>Practice Platforms</h2>
+        <hr>
+
         <div class="platform-grid">
             <div class="platform-card">
                 <h3><i class="fas fa-code"></i> LeetCode</h3>
@@ -635,54 +813,54 @@
             </div>
         </div>
     </div>
-    <div class="topic-card">
+    <div class="card-section">
         <h2>More Resources</h2>
-        <div class="course-cards" style="margin-top: 2rem;">
-            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
-                <h3>Introduction to Python</h3>
-                <div class="course-details">
-                    <span><i class="fas fa-list"></i> Features: Beginner-friendly, based on official Python
-                        documentation, project-based learning.</span>
-                    <span><i class="fas fa-signal"></i> Level: Beginner</span>
-                    <a href="https://academy.jetbrains.com/courses/introduction-to-python" target="_blank"
-                        class="course-link">View Course</a>
-                </div>
+        <hr>
+    </div>
+    <div class="course-cards" style="margin-top: 2rem;">
+        <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+            <h3>Introduction to Python</h3>
+            <div class="course-details">
+                <span><i class="fas fa-list"></i> Features: Beginner-friendly, based on official Python
+                    documentation, project-based learning.</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner</span>
+                <a href="https://academy.jetbrains.com/courses/introduction-to-python" target="_blank"
+                    class="course-link">View Course</a>
             </div>
-            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
-                <h3>Python Developer (Hyperskill)</h3>
-                <div class="course-details">
-                    <span><i class="fas fa-list"></i> Features: Build a strong foundation for a career in tech, from
-                        basics to advanced projects.</span>
-                    <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
-                    <a href="https://hyperskill.org/tracks/2" target="_blank" class="course-link">View Course</a>
-                </div>
+        </div>
+        <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+            <h3>Python Developer (Hyperskill)</h3>
+            <div class="course-details">
+                <span><i class="fas fa-list"></i> Features: Build a strong foundation for a career in tech, from
+                    basics to advanced projects.</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner to Advanced</span>
+                <a href="https://hyperskill.org/tracks/2" target="_blank" class="course-link">View Course</a>
             </div>
-            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
-                <h3>Python Libraries - NumPy</h3>
-                <div class="course-details">
-                    <span><i class="fas fa-list"></i> Features: Introductory course on NumPy, hands-on exercises, best
-                        for those with basic Python knowledge.</span>
-                    <span><i class="fas fa-signal"></i> Level: Beginner/Intermediate</span>
-                    <a href="https://academy.jetbrains.com/courses/python-libraries-numpy" target="_blank"
-                        class="course-link">View Course</a>
-                </div>
+        </div>
+        <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+            <h3>Python Libraries - NumPy</h3>
+            <div class="course-details">
+                <span><i class="fas fa-list"></i> Features: Introductory course on NumPy, hands-on exercises, best
+                    for those with basic Python knowledge.</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner/Intermediate</span>
+                <a href="https://academy.jetbrains.com/courses/python-libraries-numpy" target="_blank"
+                    class="course-link">View Course</a>
             </div>
-            <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
-                <h3>UI Test Automation with Selenium and Python</h3>
-                <div class="course-details">
-                    <span><i class="fas fa-list"></i> Features: Learn automated UI tests with Python and Selenium, core
-                        Selenium features, practical projects.</span>
-                    <span><i class="fas fa-signal"></i> Level: Beginner/Intermediate</span>
-                    <a href="https://academy.jetbrains.com/courses/ui-test-automation-with-selenium-and-python"
-                        target="_blank" class="course-link">View Course</a>
-                </div>
+        </div>
+        <div class="course-card" style="max-width: 400px; min-width: 300px; flex: 1 1 340px;">
+            <h3>UI Test Automation with Selenium and Python</h3>
+            <div class="course-details">
+                <span><i class="fas fa-list"></i> Features: Learn automated UI tests with Python and Selenium, core
+                    Selenium features, practical projects.</span>
+                <span><i class="fas fa-signal"></i> Level: Beginner/Intermediate</span>
+                <a href="https://academy.jetbrains.com/courses/ui-test-automation-with-selenium-and-python"
+                    target="_blank" class="course-link">View Course</a>
             </div>
         </div>
     </div>
-    <div class="topic-card">
+    <div class="card-section">
         <h2>12-Week Learning Roadmap</h2>
-        <p>Master Python programming with this comprehensive 12-week roadmap. Each week includes detailed topics,
-            learning resources, and practice questions.</p>
+        <hr>
     </div>
 
     <!-- Week 1-2: Python Fundamentals -->
@@ -1050,7 +1228,6 @@
     </div>
 
     <!-- Week 12: Final Project -->
-    <!-- Need to add all the project links, as it have been removed by w3schools, and add another webiste, or create another webiste, with what to do in project-->
     <div class="roadmap-section">
         <h3>Week 12: Final Project</h3>
         <div class="roadmap-content">
@@ -1068,9 +1245,9 @@
     </div>
 
     <!-- Advanced Topics Section -->
-    <div class="topic-card">
+    <div class="card-section">
         <h2>Advanced Python Topics</h2>
-        <p>After completing the 12-week Python course, explore these advanced topics to enhance your skills.</p>
+        <hr>
     </div>
 
     <!-- DSA Certification Courses -->
@@ -1127,7 +1304,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <script>
         // Theme Toggle
@@ -1153,16 +1329,6 @@
             header.addEventListener('click', () => {
                 const section = header.parentElement;
                 section.classList.toggle('collapsed');
-            });
-        });
-
-        // Search Functionality
-        const searchInput = document.querySelector('.search-input');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            document.querySelectorAll('.roadmap-section').forEach(section => {
-                const content = section.textContent.toLowerCase();
-                section.style.display = content.includes(searchTerm) ? 'block' : 'none';
             });
         });
     </script>
