@@ -10,13 +10,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="https://th.bing.com/th/id/OIP.jOLSlI8WOXBNj-R6jkuX1AAAAA?cb=iwc1&rs=1&pid=ImgDetMain">
     <style>
-        /* Basic color scheme - keeping it simple and easy on the eyes */
+        /* Light theme by default */
         :root {
-            --primary-color: #4a90e2;    /* Nice blue color */
-            --secondary-color: #f5f5f5;   /* Light gray for backgrounds */
-            --text-color: #333;          /* Dark gray for text */
-            --card-bg: #fff;             /* White for cards */
-            --border-color: #ddd;        /* Light gray for borders */
+            --primary-color: #9b4dca;    /* Bright purple */
+            --secondary-color: #f5f5f5;   /* Light gray background */
+            --text-color: #333;          /* Dark text */
+            --card-bg: #ffffff;          /* White cards */
+            --border-color: #e0e0e0;     /* Light border */
+            --hover-color: #b06ee6;      /* Lighter purple for hover */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dark theme */
+        [data-theme="dark"] {
+            --primary-color: #9b4dca;    /* Keep purple */
+            --secondary-color: #2d1b4d;   /* Dark purple background */
+            --text-color: #e0e0e0;        /* Light text */
+            --card-bg: #3a2a5a;          /* Dark purple cards */
+            --border-color: #4a3a6a;      /* Dark border */
+            --hover-color: #b06ee6;       /* Lighter purple for hover */
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
 
         /* Basic reset and body styles */
@@ -27,9 +40,10 @@
             margin: 0;
             min-height: 100vh;
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Simple navbar with basic shadow */
+        /* Updated navbar styles */
         .navbar {
             background: var(--primary-color);
             color: white;
@@ -37,28 +51,48 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px var(--shadow-color);
+            transition: background-color 0.3s ease;
+            position: relative;
         }
 
         .navbar h1 {
             margin: 0;
             font-size: 1.8rem;
             font-weight: 500;
+            text-align: center;
+            flex-grow: 1;
         }
 
-        /* Simple search input */
-        .search-input {
-            padding: 0.5rem 1rem;
+        /* Updated theme toggle button */
+        .theme-toggle {
+            background: var(--card-bg);
+            color: var(--primary-color);
             border: none;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
-            font-size: 1rem;
-            width: 300px;
-            max-width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            min-width: 120px;
+            justify-content: center;
         }
 
-        .search-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        .theme-toggle:hover {
+            background: var(--hover-color);
+            color: white;
+            transform: translateY(-50%) scale(1.02);
+        }
+
+        .theme-toggle i {
+            font-size: 1.1rem;
         }
 
         /* Main container with max-width for readability */
@@ -81,13 +115,13 @@
         }
 
         .welcome p {
-            color: #666;
+            color: var(--text-color);
             font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto;
         }
 
-        /* Simple card grid layout */
+        /* Card grid layout */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -95,7 +129,7 @@
             margin-top: 1rem;
         }
 
-        /* Basic card design with subtle hover effect */
+        /* Card design with theme-aware styles */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -105,14 +139,16 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            border-color: var(--primary-color);
         }
 
-        /* Simple logo container */
+        /* Logo container */
         .card .logo {
             width: 60px;
             height: 60px;
@@ -120,11 +156,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(155, 77, 202, 0.1);
+            border-radius: 50%;
+            padding: 0.5rem;
+            transition: background-color 0.3s ease;
         }
 
         .card .logo img {
             max-width: 100%;
             height: auto;
+            filter: brightness(0.9);
         }
 
         .card h3 {
@@ -134,12 +175,12 @@
         }
 
         .card p {
-            color: #666;
+            color: var(--text-color);
             margin: 0 0 1rem 0;
             font-size: 0.95rem;
         }
 
-        /* Simple button style */
+        /* Button style with theme-aware colors */
         .card a {
             display: inline-block;
             background: var(--primary-color);
@@ -148,11 +189,12 @@
             padding: 0.6rem 1.2rem;
             border-radius: 4px;
             font-size: 0.95rem;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .card a:hover {
-            background: #357abd;
+            background: var(--hover-color);
+            transform: translateY(-2px);
         }
 
         /* Section headings */
@@ -163,36 +205,56 @@
             font-weight: 500;
         }
 
-        /* Mobile-friendly adjustments */
-        @media (max-width: 768px) {
+        /* Updated mobile styles */
+        @media screen and (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                gap: 1rem;
+                padding: 1rem 1rem 1rem 140px;  /* Increased left padding for the theme toggle */
+                flex-direction: row;
                 text-align: center;
             }
 
-            .search-input {
-                width: 100%;
+            .navbar h1 {
+                font-size: 1.5rem;
             }
 
-            .container {
-                margin: 1rem auto;
+            .theme-toggle {
+                right: 0.5rem;
+                min-width: 110px;
+                padding: 0.4rem 0.8rem;
             }
 
-            .card {
-                padding: 1rem;
+            .theme-toggle i {
+                font-size: 1rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media screen and (max-width: 480px) {
+            .navbar {
+                padding: 0.8rem 0.8rem 0.8rem 120px;
             }
 
-            .welcome h2 {
-                font-size: 1.8rem;
+            .navbar h1 {
+                font-size: 1.3rem;
+            }
+
+            .theme-toggle {
+                min-width: 100px;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .theme-toggle i {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
         <h1>Smart Study Portal</h1>
-        <input type="text" class="search-input" placeholder="Search subjects or languages..." oninput="filterCards()">
     </nav>
 
     <div class="container">
@@ -204,7 +266,6 @@
         <!-- Computer Science Subjects -->
         <h2>Computer Science Subjects</h2>
         <div class="card-grid" id="subjectGrid">
-            <!-- Creating and adding the websites for all the subjects : Remaining!-->
             <div class="card" data-title="Data Structures">
                 <h3>Data Structures</h3>
                 <p>Master arrays, linked lists, trees, graphs, and more for coding interviews and problem solving.</p>
@@ -229,7 +290,6 @@
                 <div class="logo">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
                 </div>
-                <!-- Python Page, 90% done, some improvements like first row of cards on mobile, and add some column and box for contents in 12 weeks learning-->
                 <h3>Python</h3>
                 <p >Beginner-friendly, versatile, and widely used for web,<br> data science, and automation.</p>
                 <a href="languages/python.html">Start Learning</a>
@@ -238,7 +298,6 @@
                 <div class="logo">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
                 </div>
-                <!-- 80% done, adding UI/UX, and some more tweaking, to make it similar to the one in python, for consistant sites-->
                 <h3>Java</h3>
                 <p>Popular for enterprise, Android, and backend development. Strong OOP foundation.</p>
                 <a href="languages/java.html">Start Learning</a>
@@ -247,7 +306,6 @@
                 <div class="logo">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
                 </div>
-                <!-- TODO : Yet to make progress in it-->
                 <h3>C</h3>
                 <p>Powerful low-level language, great for system programming and embedded systems.</p>
                 <a href="#">Start Learning</a>
@@ -270,16 +328,28 @@
             </div>
         </div>
     </div>
-    <!-- Should I remove this, I guess if the search bar gives me more problem, then I should remove this!-->
-    <!-- Simple search functionality, as it was somewhat empty in Nav bar, I guess>!? -->
+    
     <script>
-        function filterCards() {
-            const input = document.querySelector('.search-input').value.toLowerCase();
-            document.querySelectorAll('.card').forEach(card => {
-                const title = card.getAttribute('data-title').toLowerCase();
-                card.style.display = title.includes(input) ? 'flex' : 'none';
-            });
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update theme toggle button icon
+            const themeIcon = document.querySelector('.theme-toggle i');
+            themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        
+        // Set initial theme icon
+        const themeIcon = document.querySelector('.theme-toggle i');
+        themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     </script>
 </body>
 </html>
